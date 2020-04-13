@@ -10,11 +10,12 @@ type HeroNode struct {
 	No 			int
 	Name 		string
 	NickName	string
+	Pre 		*HeroNode	// 指向前一个节点
 	Next		*HeroNode   // 表示指向下一个节点
 }
 
-// 给链表插入节点
-// 第一种插入方式，在单链表最后加入，
+// 给双向链表插入节点
+// 第一种插入方式，在双向链表最后加入，
 func InsertHeroNode(head *HeroNode, newHeroNode *HeroNode)  {
 	// 思路
 	// 1. 先找到该链表的最后节点
@@ -22,12 +23,13 @@ func InsertHeroNode(head *HeroNode, newHeroNode *HeroNode)  {
 	temp := head
 	for {
 		if temp.Next == nil { // 表示找到最后
-			 break
+			break
 		}
 		temp = temp.Next // 让temp不断的指向下一个节点
 	}
 	// 3. 将newHeroNode加入到链表的最后
 	temp.Next = newHeroNode
+	newHeroNode.Pre = temp
 }
 
 // 给链表插入节点
@@ -57,6 +59,10 @@ func InsertHeroNode2(head *HeroNode, newHeroNode *HeroNode)  {
 		return
 	} else {
 		newHeroNode.Next = temp.Next
+		newHeroNode.Pre = temp
+		if temp.Next != nil {
+			temp.Next.Pre = newHeroNode
+		}
 		temp.Next = newHeroNode
 	}
 }
@@ -79,12 +85,14 @@ func DelHeroNode(head *HeroNode, id int)  {
 
 	if flag { // 找到则删除
 		temp.Next = temp.Next.Next
+		if temp.Next != nil { temp.Next.Pre = temp }
 	} else {
 		fmt.Println("sorry, id 不存在")
 	}
 }
 
 // 显示链表的所有的节点信息
+// 仍然使用单项链表的显示方式
 func ListHeroNode(head *HeroNode) {
 	// 1. 创建一个辅助节点
 	temp := head
@@ -105,17 +113,47 @@ func ListHeroNode(head *HeroNode) {
 	}
 }
 
+// 逆序
+func ListHeroNode2(head *HeroNode) {
+	// 1. 创建一个辅助节点
+	temp := head
+
+	// 先判断该链表是不是一个空链表
+	if temp.Next == nil {
+		fmt.Println("空空如也")
+		return
+	}
+
+	// 2. 让temp定位到双向链表的最后
+	for {
+		if temp.Next == nil {
+			break
+		}
+		temp = temp.Next
+	}
+
+	// 2. 遍历这个链表
+	for {
+		fmt.Printf("[%d , %s, %s]==>", temp.No, temp.Name, temp.NickName )
+		// 判断是否为双链表头
+		temp = temp.Pre
+		if temp.Pre == nil {
+			break
+		}
+	}
+}
+
 func main() {
 
 	// 1. 创建一个头节点
 	head := &HeroNode{}
 
 	// 2. 创建一个新的heronode
-	hero1 := &HeroNode{1, "宋江", "及时雨", nil}
-	hero2 := &HeroNode{2, "李逵", "黑旋风", nil}
-	hero3 := &HeroNode{3, "卢俊义", "玉麒麟", nil}
-	hero4 := &HeroNode{4, "林冲", "豹子头", nil}
-	hero5 := &HeroNode{5, "鲁智深", "花和尚", nil}
+	hero1 := &HeroNode{1, "宋江", "及时雨", nil, nil}
+	hero2 := &HeroNode{2, "李逵", "黑旋风", nil, nil}
+	hero3 := &HeroNode{3, "卢俊义", "玉麒麟", nil, nil}
+	hero4 := &HeroNode{4, "林冲", "豹子头", nil, nil}
+	hero5 := &HeroNode{5, "鲁智深", "花和尚", nil, nil}
 
 	// 3. 加入
 	InsertHeroNode2(head, hero4)
@@ -123,9 +161,16 @@ func main() {
 	InsertHeroNode2(head, hero5)
 	InsertHeroNode2(head, hero2)
 	InsertHeroNode2(head, hero3)
+	//InsertHeroNode(head, hero1)
+	//InsertHeroNode(head, hero2)
+	//InsertHeroNode(head, hero3)
+	//InsertHeroNode(head, hero4)
+	//InsertHeroNode(head, hero5)
 
 	// 4. 显示
 	ListHeroNode(head)
+	fmt.Println()
+	ListHeroNode2(head)
 
 	// 5. 删除
 	DelHeroNode(head, 3)
