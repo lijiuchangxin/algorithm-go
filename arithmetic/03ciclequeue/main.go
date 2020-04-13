@@ -8,7 +8,7 @@ import (
 
 // 使用一个结构体管理环形队列
 type circleQueue struct {
-	maxSize int //4
+	maxSize int //5
 	array [5]int
 	head int  // 指向队列对首
 	tail int  // 指向队尾
