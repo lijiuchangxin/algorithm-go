@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type MyCircularQueue struct {
 	MaxSize int
@@ -25,8 +27,8 @@ func Constructor(k int) MyCircularQueue {
 /** Insert an element into the circular queue. Return true if the operation is successful. */
 func (this *MyCircularQueue) EnQueue(value int) bool {
 	if this.IsFull() { return false }
-	this.Tail =  (this.Tail + 1) % this.MaxSize
 	this.ValueSlice[this.Tail] = value
+	this.Tail =  (this.Tail + 1) % this.MaxSize
 	return true
 }
 
@@ -49,7 +51,8 @@ func (this *MyCircularQueue) Front() int {
 /** Get the last item from the queue. */
 func (this *MyCircularQueue) Rear() int {
 	if this.IsEmpty() { return -1 }
-	return this.ValueSlice[this.Tail]
+	if this.Tail == 0 { return this.ValueSlice[this.MaxSize-1] }
+	return this.ValueSlice[this.Tail-1]
 }
 
 
@@ -86,22 +89,18 @@ func main() {
 
 	queue := Constructor(3)
 	a := queue.EnQueue(1)
-	fmt.Println(queue.ValueSlice)
-
 	b := queue.EnQueue(2)
-	fmt.Println(queue.ValueSlice)
-
 	c := queue.EnQueue(3)
-	fmt.Println(queue.ValueSlice)
-
 	d := queue.EnQueue(4)
 	fmt.Println(queue.ValueSlice)
 	e := queue.Rear()
+	fmt.Println(e)
 	f := queue.IsFull()
 	g := queue.DeQueue()
 	fmt.Println(queue.ValueSlice)
 	h := queue.EnQueue(4)
 	fmt.Println(queue.ValueSlice)
+	fmt.Println("------")
 	i := queue.Rear()
 
 	fmt.Println(a, b, c, d, e, f, g, h, i)
