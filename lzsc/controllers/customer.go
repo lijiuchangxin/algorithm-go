@@ -43,16 +43,20 @@ func (c *CustomerController) NewCustomer() {
 		response["code"] = 10001
 		response["msg"] = err.Error()
 	} else {
-		if err := models.CreateCustomer(&requestBody) ; err != nil {
-			response["msg"] = err.Error()
+		if !models.JudgeApiIsExists(requestBody.OpenApiToken) {
+			response["msg"] = "customer already exist"
 			response["code"] = 10002
 		} else {
-			response["msg"] = "success"
-			response["code"] = 10000
+			if err := models.CreateCustomer(&requestBody) ; err != nil {
+				response["msg"] = err.Error()
+				response["code"] = 10002
+			} else {
+				response["msg"] = "success"
+				response["code"] = 10000
+			}
 		}
 	}
 	c.Data["json"] = response
 	c.ServeJSON()
 	return
-
 }

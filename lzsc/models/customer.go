@@ -2,7 +2,6 @@ package models
 
 import (
 	"errors"
-	"fmt"
 	"github.com/astaxie/beego/orm"
 	"reflect"
 )
@@ -61,8 +60,6 @@ type CustomerAlteration struct {
 
 func CreateCustomer(customer *UtCustomer) error {
 	o := orm.NewOrm()
-	customer_ := &UtCustomer{OpenApiToken: customer.OpenApiToken}
-	if err := o.Read(customer_); err == nil { return errors.New("customer already exist")} else {fmt.Println(err.Error())}
 	if _, err := o.Insert(customer); err != nil { return errors.New("create customer error") }
 	return nil
 }
@@ -105,7 +102,7 @@ func ShowCustomerDetail(cid int) (res map[string]interface{}) {
 
 func JudgeApiIsExists(api string) bool {
 	o := orm.NewOrm()
-	if err := o.Read(&UtCustomer{OpenApiToken:api}); err != nil { return false }
+	if num, _ := o.QueryTable("UtCustomer").Filter("OpenApiToken", api).Count(); num > 0 { return false}
 	return true
 }
 
