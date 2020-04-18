@@ -1,0 +1,56 @@
+CREATE TABLE `customer_alteration` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `customer_id` int NOT NULL DEFAULT '0',
+  `user_id` int NOT NULL DEFAULT '0',
+  `user_nick_name` varchar(20) NOT NULL DEFAULT '',
+  `alter_time` int NOT NULL DEFAULT '0',
+  `summary` varchar(200) NOT NULL DEFAULT '',
+  `feed_type` varchar(20) NOT NULL DEFAULT 'alter',
+  PRIMARY KEY (`id`),
+  KEY `fk_customer_alteration_1_idx` (`customer_id`),
+  CONSTRAINT `fk_customer_alteration_1` FOREIGN KEY (`customer_id`) REFERENCES `ut_customer` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `customer_follow_up` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `create_at` int NOT NULL DEFAULT '0',
+  `updated_at` int NOT NULL DEFAULT '0',
+  `customer_id` int NOT NULL DEFAULT '0',
+  `feed_type` varchar(20) NOT NULL DEFAULT 'follow up',
+  `user_id` int NOT NULL DEFAULT '0',
+  `user_avatar` varchar(200) NOT NULL DEFAULT '',
+  `user_nick_name` varchar(20) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `fk_customer_follow_up_1_idx` (`customer_id`),
+  CONSTRAINT `fk_customer_follow_up_1` FOREIGN KEY (`customer_id`) REFERENCES `ut_customer` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `ut_customer` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `customer_nike_name` varchar(100) NOT NULL DEFAULT '',
+  `desc` varchar(255) NOT NULL DEFAULT '',
+  `tag` varchar(20) NOT NULL DEFAULT '',
+  `tel_phone` varchar(20) NOT NULL DEFAULT '',
+  `cell_phone` varchar(20) NOT NULL DEFAULT '',
+  `email` varchar(20) NOT NULL DEFAULT '',
+  `is_vip` tinyint(1) NOT NULL DEFAULT '0',
+  `province` varchar(20) NOT NULL DEFAULT '',
+  `city` varchar(20) NOT NULL DEFAULT '',
+  `source_channel` varchar(20) NOT NULL DEFAULT '',
+  `create_at` int NOT NULL DEFAULT '0',
+  `updated_at` int NOT NULL DEFAULT '0',
+  `organization_name` varchar(20) NOT NULL DEFAULT '',
+  `organization_id` int NOT NULL DEFAULT '0',
+  `owner_group_id` int NOT NULL DEFAULT '0',
+  `owner_group_name` varchar(20) NOT NULL DEFAULT '',
+  `owner_id` int NOT NULL DEFAULT '0',
+  `owner_name` varchar(20) NOT NULL DEFAULT '',
+  `ticket_count` int unsigned NOT NULL DEFAULT '0',
+  `last_contact_at` int NOT NULL DEFAULT '0',
+  `last_contact_im_at` int NOT NULL DEFAULT '0',
+  `first_contact_at` int NOT NULL DEFAULT '0',
+  `first_contact_im_at` int NOT NULL DEFAULT '0',
+  `open_api_token` varchar(200) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=130 DEFAULT CHARSET=utf8;
+SELECT * FROM customer.ut_customer;
