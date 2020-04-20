@@ -41,22 +41,33 @@ func QuickSort(left int, right int, array []int)  {
 		}
 
 		// 向左递归
-		if left < r {
-			QuickSort(left, r, array)
-		}
-		// 向右递归
-		if right > l {
-			QuickSort(l, right, array)
-		}
+		//if left < r {
+		//	QuickSort(left, r, array)
+		//}
+		//// 向右递归
+		//if right > l {
+		//	QuickSort(l, right, array)
+		//}
 	}
-
+	if l == r {
+		l++
+		r--
+	}
+	// 向左递归
+	if left < r {
+		QuickSort(left, r, array)
+	}
+	// 向右递归
+	if right > l {
+		QuickSort(l, right, array)
+	}
 }
 
 
 func main() {
 
-	//arr := []int{-9, 78, 0, 23, -567, 70, -12, 45, 99, 91, 832}
-	arr := []int{-9, 78, 0, 23, -567, 70, -7, 0, 99, 1203, -78, 884, -455}
+	arr := []int{-9, 78, 0, 23, -567, 70, -12, 45, 99, 91, 832}
+	//arr := []int{-9, 78, 0, 23, -567, 70, -7, 0, 99, 1203, -78, 884, -455}
 	fmt.Println(arr)
 	QuickSort(0, len(arr)-1, arr)
 	fmt.Println(arr)
