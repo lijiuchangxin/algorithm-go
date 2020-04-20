@@ -1,2 +1,2 @@
 # golang
-golang correlation
+使用golang实现常见算法
