@@ -86,7 +86,7 @@ func DeleteCatNode(head *CatNode, id int) *CatNode {
 			break
 		}
 		temp = temp.Next    // 移动 用于比较
-		helper = temp.Next  // 移动 用于删除
+		helper = helper.Next  // 移动 用于删除
 	}
 
 	if flag { // 如果flag 为真，则我们在上面没有删除
@@ -97,8 +97,7 @@ func DeleteCatNode(head *CatNode, id int) *CatNode {
 			fmt.Println("sorry, no cat", id)
 		}
 	}
-	fmt.Println(head)
-	return head
+ 	return head
 }
 
 // 输出环形链表
@@ -137,23 +136,18 @@ func main() {
 		Name: "lsy",
 	}
 
-	cat4 := &CatNode{
-		No:   4,
-		Name: "mjq",
-	}
 	//
 	InsertCatNode(head, cat1)
 	InsertCatNode(head, cat2)
 	InsertCatNode(head, cat3)
-	InsertCatNode(head, cat4)
 	ListCircleLink(head)
 
-	head = DeleteCatNode(head, 2)
-	fmt.Println(head)
-	fmt.Println(head.Next)
-	fmt.Println(head.Next.Next)
-	fmt.Println(head.Next.Next.Next)
+	DeleteCatNode(head, 9)
+	//fmt.Println(head)
+	//fmt.Println(head.Next)
+	//fmt.Println(head.Next.Next)
+	//fmt.Println(head.Next.Next.Next)
 
-	//ListCircleLink(head)
+	ListCircleLink(head)
 
 }
